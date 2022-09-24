@@ -52,7 +52,13 @@ def go(config: DictConfig):
             ##################
             # Implement here #
             ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/get_data",
+                "main",
+                parameters={
+                    
+                }
+            )
 
         if "data_check" in active_steps:
             ##################
