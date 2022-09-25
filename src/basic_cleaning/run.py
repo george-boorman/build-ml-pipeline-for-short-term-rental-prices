@@ -23,6 +23,8 @@ def go(args):
     ######################
     # YOUR CODE HERE     #
     ######################
+    logger.info(f"Downloading {args.input_artifact}")
+
 
 
 if __name__ == "__main__":
@@ -32,43 +34,43 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--input_artifact", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Link to the dataset from W&B",
         required=True
     )
 
     parser.add_argument(
         "--output_artifact", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Name to save the updated dataset as",
         required=True
     )
 
     parser.add_argument(
         "--output_type", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Type of output created by the step",
         required=True
     )
 
     parser.add_argument(
         "--output_description", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=str,
+        help="Cleaned dataset",
         required=True
     )
 
     parser.add_argument(
         "--min_price", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=float,
+        help="Minimum price we'll pay for a NYC rental",
         required=True
     )
 
     parser.add_argument(
         "--max_price", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
+        type=float,
+        help="Maximum price we'll pay for a NYC rental",
         required=True
     )
 

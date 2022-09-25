@@ -56,7 +56,12 @@ def go(config: DictConfig):
                 f"{config['main']['components_repository']}/get_data",
                 "main",
                 parameters={
-                    
+                    "input_artifact": "sample.csv:latest",
+                    "output_artifact": "cleaned_data.csv",
+                    "output_type": "string",
+                    "output_description": "Cleaned dataset",
+                    "min_price": config["etl"]["min_price"],
+                    "max_price": config["etl"]["maximum_price"]
                 }
             )
 
