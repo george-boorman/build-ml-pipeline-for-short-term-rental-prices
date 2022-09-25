@@ -61,7 +61,7 @@ def go(config: DictConfig):
                     "output_type": "string",
                     "output_description": "Cleaned dataset",
                     "min_price": config["etl"]["min_price"],
-                    "max_price": config["etl"]["maximum_price"]
+                    "max_price": config["etl"]["max_price"]
                 }
             )
 
