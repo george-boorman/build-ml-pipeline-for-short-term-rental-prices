@@ -13,24 +13,38 @@ logger = logging.getLogger()
 
 def go(args):
 
-    run = wandb.init(job_type="basic_cleaning")
+    run = wandb.init(project="nyc_airbnb", job_type="basic_cleaning", save_code=True)
     run.config.update(args)
 
-    # Download input artifact. This will also log that this script is using this
-    # particular version of the artifact
-    # artifact_local_path = run.use_artifact(args.input_artifact).file()
-
-    ######################
-    # YOUR CODE HERE     #
-    ######################
     logger.info(f"Downloading {args.input_artifact}")
+    data_path = run.use_artifact(args.input_artifact).file()
+    df = pd.read_csv(data_path, low_memory=False)
 
+    # Drop outliers
+    idx = df['price'].between(args.min_price, args.max_price)
+    df = df[idx].copy()
+
+    # Convert last_review to datetime
+    df['last_review'] = pd.to_datetime(df['last_review'])
+
+    # Save updated DataFrame
+    df.to_csv(args.output_artifact, index=False)
+
+    # Upload cleaned DataFrame to W&B
+    artifact = wandb.Artifact(
+        args.output_artifact,
+        type=args.output_type,
+        description=args.output_description,
+    )
+    artifact.add_file("clean_sample.csv")
+    run.log_artifact(artifact)
+
+    logger.info(f"Logging {artifact}")
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Basic data cleaning")
-
 
     parser.add_argument(
         "--input_artifact", 
