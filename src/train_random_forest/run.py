@@ -88,7 +88,7 @@ def go(args):
         shutil.rmtree("random_forest_dir")
 
     # Get model signature
-    model_signature = mlflow.infer_signature(X_val, y_pred)
+    model_signature = mlflow.models.infer_signature(X_val, y_pred)
 
     mlflow.sklearn.save_model(
         sk_pipe,
@@ -102,14 +102,15 @@ def go(args):
     # type, provide a description and add rf_config as metadata. Then, use the .add_dir method of the artifact instance
     # you just created to add the "random_forest_dir" directory to the artifact, and finally use
     # run.log_artifact to log the artifact to the run
-    artifact = wandb.artifact(
+    artifact = wandb.Artifact(
         args.output_artifact,
         type="model_export",
         description="Trained Random Forest model",
         metadata=rf_config
     )
     artifact.add_dir("random_forest_dir")
-    artifact.add_file(artifact)
+    run.log_artifact(artifact)
+    logger.info(f"Logging {artifact}")
 
     # Plot feature importance
     fig_feat_imp = plot_feature_importance(sk_pipe, processed_features)
@@ -219,8 +220,8 @@ def get_inference_pipeline(rf_config, max_tfidf_features):
     # with the random forest instance that we just saved in the `random_forest` variable.
     # HINT: Use the explicit Pipeline constructor so you can assign the names to the steps, do not use make_pipeline
     sk_pipe = Pipeline(steps=[
-        ("preprocessor", preprocessor()),
-        ("random_forest", random_Forest())
+        ("preprocessor", preprocessor),
+        ("random_forest", random_Forest)
     ])
 
     return sk_pipe, processed_features
