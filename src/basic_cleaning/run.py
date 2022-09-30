@@ -28,7 +28,7 @@ def go(args):
     df['last_review'] = pd.to_datetime(df['last_review'])
 
     # Save updated DataFrame
-    df.to_csv(args.output_artifact, index=False)
+    df.to_csv("clean_sample.csv", index=False)
 
     # Upload cleaned DataFrame to W&B
     artifact = wandb.Artifact(

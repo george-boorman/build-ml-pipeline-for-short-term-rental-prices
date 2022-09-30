@@ -54,7 +54,7 @@ def go(config: DictConfig):
                 "main",
                 parameters={
                     "input_artifact": "sample.csv:latest",
-                    "output_artifact": "cleaned_data.csv",
+                    "output_artifact": "clean_sample.csv",
                     "output_type": "string",
                     "output_description": "Cleaned dataset",
                     "min_price": config["etl"]["min_price"],
@@ -63,10 +63,16 @@ def go(config: DictConfig):
             )
 
         if "data_check" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "data_check"),
+                "main",
+                parameters={
+                    "csv": "clean_sample.csv:latest",
+                    "ref": "clean_sample.csv:reference",
+                    "kl_threshold": config["data_check"]["kl_threshold"],
+                    "min_price": config["etl"]["min_price"],
+                    "max_price": config["etl"]["max_price"]
+                }
 
         if "data_split" in active_steps:
             ##################
