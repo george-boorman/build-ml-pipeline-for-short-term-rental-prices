@@ -87,9 +87,14 @@ def go(args):
     if os.path.exists("random_forest_dir"):
         shutil.rmtree("random_forest_dir")
 
+    # Get model signature
+    model_signature = mlflow.infer_signature(X_val, y_pred)
+
     mlflow.sklearn.save_model(
         sk_pipe,
-        "random_forest_dir"
+        "random_forest_dir",
+        signature=model_signature,
+        input_example=X_val.iloc[:5]
     )
 
     # Upload the model we just exported to W&B
