@@ -1,6 +1,9 @@
 # Link to GitHub repo
+
 https://github.com/george-boorman/build-ml-pipeline-for-short-term-rental-prices
 
+# Link to Weights & Biases
+https://wandb.ai/georgeboorman/nyc_airbnb/overview?workspace=user-georgeboorman
 
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
 You are working for a property management company renting rooms and properties for short periods of 
